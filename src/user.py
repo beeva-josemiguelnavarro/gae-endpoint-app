@@ -5,7 +5,7 @@ import logging
 from google.appengine.api import users
 #from google.appengine.ext import ndb
 
-from models import User
+from models.user import UserModel
 
 import jinja2
 import webapp2
@@ -30,7 +30,7 @@ class RegisterPage(webapp2.RequestHandler):
         password = cgi.escape(self.request.get("inputPassword"))
         if(email is not None and password is not None):
             logging.info('Register '+username+" - "+email+" - "+password)
-            user = User(username=username, email=email, password=password)
+            user = UserModel(user_id=username, email=email, password=password)
             userKey = user.put()
             logging.info(userKey)
             logging.info(userKey.id())

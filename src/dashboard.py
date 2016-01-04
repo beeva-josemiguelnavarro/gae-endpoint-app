@@ -12,9 +12,9 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class DashboardPage(webapp2.RequestHandler):
     def get(self):
-        user = users.get_current_user()
-        template = JINJA_ENVIRONMENT.get_template('templates/pages/dashboard.html')
-        if(user):
+        user = users.get_current_user()        
+        if user is not None:
+            template = JINJA_ENVIRONMENT.get_template('templates/pages/dashboard.html')
             self.response.write(template.render({'user':user}))
         else:
             self.redirect('/')
