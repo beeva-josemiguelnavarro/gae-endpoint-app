@@ -23,13 +23,13 @@ handlers:  # static then dynamic
   script: backend_api.app
   
 - url: /
-  script: main.app
+  script: public.app
   
 - url: /login
-  script: main.app
+  script: public.app
   
 - url: /logout
-  script: main.app
+  script: public.app
   
 - url: /register
   script: user.app

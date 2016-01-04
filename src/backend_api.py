@@ -32,7 +32,7 @@ class UserModel(ndb.Model):
  
 class UserCollection(messages.Message):
     """Collection of users."""
-    items = messages.MessageField(User, 1, repeated=True)
+    data = messages.MessageField(User, 1, repeated=True)
    
 @endpoints.api(name='services', version='v1', description='Backend api services')
 class ServicesApi(remote.Service):
@@ -48,7 +48,7 @@ class ServicesApi(remote.Service):
                               key=str(userItem.key.id()),
                               strava_id=userItem.strava_id,
                               strava_token=userItem.strava_token))
-        return UserCollection(items = items)
+        return UserCollection(data = items)
 
     @endpoints.method(message_types.VoidMessage, User,
                       path='user', http_method='POST',
