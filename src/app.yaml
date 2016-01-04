@@ -1,0 +1,64 @@
+
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+# [START handlers]
+handlers:  # static then dynamic
+- url: /favicon\.ico
+  static_files: static/images/favicon.ico
+  upload: favicon\.ico
+  
+- url: /stylesheets
+  static_dir: static/stylesheets
+
+- url: /javascripts
+  static_dir: static/javascripts
+  
+- url: /images
+  static_dir: static/images  
+  
+- url: /_ah/spi/.*
+  script: backend_api.app
+  
+- url: /
+  script: main.app
+  
+- url: /login
+  script: main.app
+  
+- url: /logout
+  script: main.app
+  
+- url: /register
+  script: user.app
+  
+- url: /dashboard
+  script: dashboard.app
+  login: required
+
+- url: /settings
+  script: settings.app
+  login: required
+  
+- url: /profile
+  script: profile.app
+  login: required
+  
+- url: /help
+  script: public.app
+  
+- url: /.*
+  script: guestbook.app
+  
+libraries:
+- name: webapp2
+  version: latest  
+- name: jinja2
+  version: latest  
+- name: endpoints
+  version: latest
+# pycrypto library used for OAuth2 (req'd for authenticated APIs)
+- name: pycrypto
+  version: latest

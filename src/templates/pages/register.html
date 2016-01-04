@@ -1,0 +1,28 @@
+{% extends "templates/commons/base.html" %}
+
+{% block titlePage %}
+   <title>GAP Test - Register</title>
+{% endblock %}
+{% block content %}
+<div class="row">
+  	<div class="col-md-8 col-md-offset-2">
+	  	
+		<h1>Register Page</h1>
+		<form action="/register" method="post" name="registerForm">
+		  <div class="form-group">
+		    <label for="inputUsername">Username</label>
+		    <input type="text" class="form-control" id="inputUsername" name="inputUsername" placeholder="Username">
+		  </div>
+		  <div class="form-group">
+		    <label for="inputEmail">Email address</label>
+		    <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="Email">
+		  </div>
+		  <div class="form-group">
+		    <label for="inputPassword">Password</label>
+		    <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password">
+		  </div>
+		  <button type="submit" class="btn btn-default">Register</button>
+		</form>
+	</div>
+</div>
+{% endblock %}
