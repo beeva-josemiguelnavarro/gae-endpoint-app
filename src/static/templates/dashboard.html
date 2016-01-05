@@ -1,0 +1,11 @@
+<ul ng-if="users && ready && !error">
+	<li ng-repeat="user in users">
+		{{user.email}} - {{user.key}} - {{user.user_id}}
+	</li>
+</ul>
+<p ng-if="error">
+	Hay error {{error}}
+</p>
+<p ng-if="!ready">
+	LOADING
+</p>

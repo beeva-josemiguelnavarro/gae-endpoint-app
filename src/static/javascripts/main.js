@@ -1,13 +1,26 @@
 'use strict'
 
-angular.module('app',[])
-	.service('UserService',['$http',function($http){		
+angular.module('app',['ngRoute'])
+	.value('endpoint','/_ah/api/services/v1')
+	.service('UserService',['$http',function($http){			
 		this.getUsers = function(){
-			console.log('FETCHING from ',this.endpoint, '/users')
 			return $http.get('/_ah/api/services/v1/users')
 		}
+		
+		this.getUser = function(id){
+			return $http.get('/_ah/api/services/v1/users/'+id)
+		}
 	}])
-	.controller('userController',['$scope','UserService',function($scope, UserService){
+	.config(function($routeProvider) {
+		$routeProvider
+		.when('/',{
+			controller:'DashboardController as dashboard',
+			templateUrl:'templates/dashboard.html'
+		}).otherwise({
+		      redirectTo:'/'
+	    });
+	})
+	.controller('DashboardController',['$scope','UserService',function($scope, UserService){
 		$scope.users = [];
         $scope.error = undefined;
         $scope.ready = false;
@@ -23,3 +36,4 @@ angular.module('app',[])
 	            $scope.ready = true;
 	        });
 	}]);
+

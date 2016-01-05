@@ -12,8 +12,10 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class HomePage(webapp2.RequestHandler):
     def get(self):
-        if users.get_current_user() is not None:
-            self.redirect('/dashboard')
+        user = users.get_current_user() 
+        if user is not None:
+            template = JINJA_ENVIRONMENT.get_template('templates/pages/dashboard.html')
+            self.response.write(template.render({'user':user}))
         else:
             template = JINJA_ENVIRONMENT.get_template('templates/pages/home.html')
             self.response.write(template.render())
@@ -21,7 +23,7 @@ class HomePage(webapp2.RequestHandler):
 class LogInPage(webapp2.RequestHandler):
     def get(self):
         if users.get_current_user() is not None:
-            self.redirect('/dashboard')
+            self.redirect('/')
         else:
             self.redirect(users.create_login_url(self.request.uri))
 

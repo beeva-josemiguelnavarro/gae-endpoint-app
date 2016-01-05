@@ -5,28 +5,9 @@
 {% endblock %}
 {% block content %}
 <div class="row" ng-app="app">
-  	<div class="col-md-6 col-md-offset-2">
-		<div ng-controller="userController">
-			<ul ng-if="users && ready && !error">
-				<li ng-repeat="userInfo in users">
-					{{userInfo.email}} - {{userInfo.key}} - {{userInfo.user_id}}
-				</li>
-			</ul>
-			<p ng-if="error">
-				Hay error {{error}}
-			</p>
-			<p ng-if="!ready">
-				LOADING
-			</p>
+  	<div class="col-md-8 col-md-offset-2">
+		<div ng-view>			
 		</div>
-	</div>
-	<div class="col-md-2">
-		<h1>DASHBOARD</h1>
-		{% if user %}
-		<p>{{ user.nickname() }}</p>
-		<p>{{ user.email() }}</p>
-		<p>{{ user.user_id() }}</p>
-		{% endif %}
 	</div>
 </div>
 {% endblock %}

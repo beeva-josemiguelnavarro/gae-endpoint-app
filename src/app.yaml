@@ -15,6 +15,9 @@ handlers:  # static then dynamic
 
 - url: /javascripts
   static_dir: static/javascripts
+
+- url: /templates
+  static_dir: static/templates
   
 - url: /images
   static_dir: static/images  
@@ -22,35 +25,8 @@ handlers:  # static then dynamic
 - url: /_ah/spi/.*
   script: backend_api.app
   
-- url: /
-  script: public.app
-  
-- url: /login
-  script: public.app
-  
-- url: /logout
-  script: public.app
-  
-- url: /register
-  script: user.app
-  
-- url: /dashboard
-  script: dashboard.app
-  login: required
-
-- url: /settings
-  script: settings.app
-  login: required
-  
-- url: /profile
-  script: profile.app
-  login: required
-  
-- url: /help
-  script: public.app
-  
 - url: /.*
-  script: guestbook.app
+  script: public.app
   
 libraries:
 - name: webapp2
