@@ -27,7 +27,7 @@ handlers:  # static then dynamic
   
 - url: /.*
   script: public.app
-  
+ 
 libraries:
 - name: webapp2
   version: latest  

@@ -2,13 +2,16 @@
 
 angular.module('app',['ngRoute'])
 	.value('endpoint','/_ah/api/services/v1')
-	.service('UserService',['$http',function($http){			
+	.service('UserService',['$http',function($http){
+		var _endpoint = '/_ah/api/services/v1/';
 		this.getUsers = function(){
-			return $http.get('/_ah/api/services/v1/users')
+			console.log(_endpoint+'users')
+			return $http.get(_endpoint+'users')
 		}
 		
 		this.getUser = function(id){
-			return $http.get('/_ah/api/services/v1/users/'+id)
+			console.log(_endpoint+'users/'+id)
+			return $http.get(_endpoint+'users/'+id)
 		}
 	}])
 	.config(function($routeProvider) {

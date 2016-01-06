@@ -2,7 +2,7 @@ from protorpc import messages
 
 from google.appengine.ext import ndb
 
-class UserForm(messages.Message):
+class UserUpdateForm(messages.Message):
     """User field to modify stored data."""
     user_id = messages.StringField(1,required=True)
     strava_id = messages.StringField(2)
@@ -24,7 +24,8 @@ class UserModel(ndb.Model):
     strava_token = ndb.StringProperty(indexed=False)
     register_date =  ndb.DateTimeProperty(auto_now_add=True)
     update_date =  ndb.DateTimeProperty(auto_now=True)
- 
+    
 class UserCollection(messages.Message):
     """Collection of users."""
-    items = messages.MessageField(User, 1, repeated=True)
+    data = messages.MessageField(User, 1, repeated=True)
+    

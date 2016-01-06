@@ -1,40 +1,19 @@
 import endpoints
+import logging
+
 from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
 from google.appengine.ext import ndb
 
-import logging
-
-class UserForm(messages.Message):
-    """User field to modify stored data."""
-    user_id = messages.StringField(1,required=True)
-    strava_id = messages.StringField(2)
-    strava_token = messages.StringField(3)
-    
-class User(messages.Message):
-    """User full information."""
-    user_id = messages.StringField(1,required=True)
-    email = messages.StringField(2,required=True)
-    key = messages.StringField(3)
-    strava_id = messages.StringField(4)
-    strava_token = messages.StringField(5)
-
-class UserModel(ndb.Model):
-    """A model of a user registered in the app"""
-    user_id = ndb.StringProperty(indexed=True)
-    email = ndb.StringProperty(required=True)
-    strava_id = ndb.StringProperty(indexed=False)
-    strava_token = ndb.StringProperty(indexed=False)
-    register_date =  ndb.DateTimeProperty(auto_now_add=True)
-    update_date =  ndb.DateTimeProperty(auto_now=True)
- 
-class UserCollection(messages.Message):
-    """Collection of users."""
-    data = messages.MessageField(User, 1, repeated=True)
-   
-@endpoints.api(name='services', version='v1', description='Backend api services')
+from models.user import User
+from models.user import UserCollection
+from models.user import UserUpdateForm
+from models.user import UserModel
+  
+@endpoints.api(name='services', version='v1', 
+               description='Backend api services')
 class ServicesApi(remote.Service):
     """Services API v1."""
     
@@ -104,7 +83,7 @@ class ServicesApi(remote.Service):
             raise endpoints.NotFoundException(message)
         return user
     
-    USER_UPDATE = endpoints.ResourceContainer(UserForm,
+    USER_UPDATE = endpoints.ResourceContainer(UserUpdateForm,
                                               id=messages.StringField(1,variant=messages.Variant.STRING, 
                                                                       required=True))
     
@@ -112,8 +91,7 @@ class ServicesApi(remote.Service):
     def update_user(self, request):
         if endpoints.get_current_user() is None:
             raise endpoints.UnauthorizedException('Authorization required')
-        
-        user_key_id = request.id  
+        user_key_id = request.id
         user_key = ndb.Key(urlsafe=str(user_key_id))
         userDb = user_key.get()
         user = None
@@ -130,6 +108,7 @@ class ServicesApi(remote.Service):
         else:
             message = 'No user with key "%s" exists.' % str(user_key_id)
             raise endpoints.NotFoundException(message)
+        
         return user
       
 app = endpoints.api_server([ServicesApi])
