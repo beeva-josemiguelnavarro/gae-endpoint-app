@@ -1,6 +1,7 @@
 from protorpc import messages
 
 from google.appengine.ext import ndb
+from oauth2client.appengine import CredentialsProperty
 
 class UserUpdateForm(messages.Message):
     """User field to modify stored data."""
@@ -28,4 +29,7 @@ class UserModel(ndb.Model):
 class UserCollection(messages.Message):
     """Collection of users."""
     data = messages.MessageField(User, 1, repeated=True)
-    
+   
+class UserCredentials(ndb.Model):
+    email = messages.StringField(1,required=True)
+    credentials = CredentialsProperty()

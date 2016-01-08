@@ -1,5 +1,7 @@
 import endpoints
 import logging
+import os
+import httplib2
 
 from protorpc import messages
 from protorpc import message_types
@@ -9,14 +11,20 @@ from google.appengine.ext import ndb
 
 from models.user import User
 from models.user import UserCollection
-from models.user import UserUpdateForm
 from models.user import UserModel
+from models.user import UserUpdateForm
+
+from settings import WEB_CLIENT_ID
+from google.appengine.api import memcache
+
+CLIENT_SECRETS = os.path.join(os.path.dirname(__file__), 'client_secrets.json')
   
 @endpoints.api(name='services', version='v1', 
-               description='Backend api services')
+               description='Backend api services',
+               allowed_client_ids=[WEB_CLIENT_ID],
+               audiences=[WEB_CLIENT_ID])
 class ServicesApi(remote.Service):
-    """Services API v1."""
-    
+    """Services API v1."""    
     @endpoints.method(message_types.VoidMessage, UserCollection, path='users', http_method='GET',name='listUsers')
     def list_users(self, request):
         usersList = UserModel.query().fetch()

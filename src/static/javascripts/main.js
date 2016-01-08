@@ -2,6 +2,7 @@
 
 angular.module('app',['ngRoute'])
 	.value('endpoint','/_ah/api/services/v1')
+	.value('secret','Cp2MvDdxOlu7vYDgqWd-95rm')
 	.service('UserService',['$http',function($http){
 		var _endpoint = '/_ah/api/services/v1/';
 		this.getUsers = function(){
